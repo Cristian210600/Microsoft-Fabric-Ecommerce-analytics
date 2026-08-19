@@ -1,0 +1,174 @@
+{
+    "name": "PL_01_METADATA_INGESTION",
+    "objectId": "a90e2c70-e1f8-4ed8-8723-e358d072a152",
+    "properties": {
+        "activities": [
+            {
+                "name": "LKP_INGESTION_CONFIG",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "source": {
+                        "type": "JsonSource",
+                        "storeSettings": {
+                            "type": "LakehouseReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "JsonReadSettings"
+                        }
+                    },
+                    "firstRowOnly": false,
+                    "datasetSettings": {
+                        "annotations": [],
+                        "linkedService": {
+                            "name": "LH_ECOMMERCE",
+                            "properties": {
+                                "annotations": [],
+                                "type": "Lakehouse",
+                                "typeProperties": {
+                                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e",
+                                    "artifactId": "cf721204-80fa-40e0-b436-3ee650c14ae5",
+                                    "rootFolder": "Files"
+                                }
+                            }
+                        },
+                        "type": "Json",
+                        "typeProperties": {
+                            "location": {
+                                "type": "LakehouseLocation",
+                                "fileName": "ingestion_config.json",
+                                "folderPath": "config"
+                            }
+                        },
+                        "schema": {}
+                    }
+                }
+            },
+            {
+                "name": "FE_INGEST_FILES",
+                "type": "ForEach",
+                "dependsOn": [
+                    {
+                        "activity": "LKP_INGESTION_CONFIG",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('LKP_INGESTION_CONFIG').output.value",
+                        "type": "Expression"
+                    },
+                    "isSequential": true,
+                    "activities": [
+                        {
+                            "name": "CPY_FILES_TO_LANDING",
+                            "type": "Copy",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "typeProperties": {
+                                "source": {
+                                    "type": "BinarySource",
+                                    "storeSettings": {
+                                        "type": "LakehouseReadSettings",
+                                        "recursive": false
+                                    },
+                                    "formatSettings": {
+                                        "type": "BinaryReadSettings"
+                                    },
+                                    "datasetSettings": {
+                                        "annotations": [],
+                                        "linkedService": {
+                                            "name": "LH_ECOMMERCE",
+                                            "properties": {
+                                                "annotations": [],
+                                                "type": "Lakehouse",
+                                                "typeProperties": {
+                                                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e",
+                                                    "artifactId": "cf721204-80fa-40e0-b436-3ee650c14ae5",
+                                                    "rootFolder": "Files"
+                                                }
+                                            }
+                                        },
+                                        "type": "Binary",
+                                        "typeProperties": {
+                                            "location": {
+                                                "type": "LakehouseLocation",
+                                                "fileName": {
+                                                    "value": "@item().source_file",
+                                                    "type": "Expression"
+                                                },
+                                                "folderPath": {
+                                                    "value": "@item().source_folder",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "sink": {
+                                    "type": "BinarySink",
+                                    "storeSettings": {
+                                        "type": "LakehouseWriteSettings"
+                                    },
+                                    "datasetSettings": {
+                                        "annotations": [],
+                                        "linkedService": {
+                                            "name": "LH_ECOMMERCE",
+                                            "properties": {
+                                                "annotations": [],
+                                                "type": "Lakehouse",
+                                                "typeProperties": {
+                                                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e",
+                                                    "artifactId": "cf721204-80fa-40e0-b436-3ee650c14ae5",
+                                                    "rootFolder": "Files"
+                                                }
+                                            }
+                                        },
+                                        "type": "Binary",
+                                        "typeProperties": {
+                                            "location": {
+                                                "type": "LakehouseLocation",
+                                                "fileName": {
+                                                    "value": "@item().source_file",
+                                                    "type": "Expression"
+                                                },
+                                                "folderPath": {
+                                                    "value": "@item().destination_folder",
+                                                    "type": "Expression"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "enableStaging": false,
+                                "skipErrorFile": {
+                                    "dataInconsistency": false
+                                },
+                                "validateDataConsistency": true
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "lastModifiedByObjectId": "5bcea9ad-7a4a-4ec2-802d-37e51d7cf364",
+        "lastPublishTime": "2026-07-27T19:09:07Z"
+    }
+}

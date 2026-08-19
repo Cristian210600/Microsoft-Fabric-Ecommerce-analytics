@@ -1,0 +1,159 @@
+{
+    "name": "PL_00_MASTER_ECOMMERCE",
+    "objectId": "25aeb4bf-5ea3-4492-bdea-f1b177197063",
+    "properties": {
+        "activities": [
+            {
+                "name": "INVOKE_PL_01_METADATA_INGESTION",
+                "description": "Invokes the metadata driven ingestion pipeline",
+                "type": "InvokePipeline",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "waitOnCompletion": true,
+                    "operationType": "InvokeFabricPipeline",
+                    "pipelineId": "a90e2c70-e1f8-4ed8-8723-e358d072a152",
+                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e"
+                },
+                "externalReferences": {
+                    "connection": "5e6158d5-e06f-4fd6-a826-42df0e7f299b"
+                }
+            },
+            {
+                "name": "RUN_NB_02_LOAD_BRONZE",
+                "description": "Loads the source data into the data layer",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "INVOKE_PL_01_METADATA_INGESTION",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "dbed6410-72c9-4744-938c-10b02c85442b",
+                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e"
+                }
+            },
+            {
+                "name": "RUN_NB_03_DATA_QUALITY",
+                "description": "Runs data  quality checks on the Bronze layer",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "RUN_NB_02_LOAD_BRONZE",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "63b221e3-f09c-4c99-8208-506ef701495d",
+                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e"
+                }
+            },
+            {
+                "name": "RUN_NB_04_SILVER_TRANSFORMATION",
+                "description": "Cleans, standardizes and transforms Bronze data into the Silver layer.",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "RUN_NB_03_DATA_QUALITY",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "051a497c-b9ac-4c99-aec4-0e5c6dc78acf",
+                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e"
+                }
+            },
+            {
+                "name": "RUN_NB_05_GOLD_DIMENSIONAL_MODEL",
+                "description": "Creates the Gold dimensional model, including dimension and fact tables.",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "RUN_NB_04_SILVER_TRANSFORMATION",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "047c7154-7926-4761-9321-30a7c79c61fa",
+                    "workspaceId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e"
+                }
+            },
+            {
+                "name": "REFRESH_SM_ECOMMERCE_ANALYTICS",
+                "description": "Refresh the ecommerce semantic model after the gold layer is succesfully updated",
+                "type": "PBISemanticModelRefresh",
+                "dependsOn": [
+                    {
+                        "activity": "RUN_NB_05_GOLD_DIMENSIONAL_MODEL",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "method": "POST",
+                    "operationType": "SemanticModelRefresh",
+                    "groupId": "71ccbaaa-7069-4ee3-b27e-41d413a70f1e",
+                    "datasetId": "1c10911a-9129-43bb-b5c4-e3889ff6c329",
+                    "waitOnCompletion": true,
+                    "commitMode": "Transactional"
+                },
+                "externalReferences": {
+                    "connection": "32f59a39-0ee0-4ffb-b30f-1ec886f0219d"
+                }
+            }
+        ],
+        "lastModifiedByObjectId": "5bcea9ad-7a4a-4ec2-802d-37e51d7cf364",
+        "lastPublishTime": "2026-08-09T15:17:58Z"
+    }
+}

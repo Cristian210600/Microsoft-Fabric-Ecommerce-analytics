@@ -1,0 +1,1877 @@
+createOrReplace
+
+	model Model
+		culture: en-US
+		defaultPowerBIDataSourceVersion: powerBI_V3
+		sourceQueryCulture: en-US
+		dataAccessOptions
+			legacyRedirects
+			returnErrorValuesAsNull
+
+		table dim_seller
+			lineageTag: 2f770918-cebe-40c7-829a-04f8d5a57dac
+			sourceLineageTag: [gold].[dim_seller]
+
+			column seller_id
+				dataType: string
+				lineageTag: f9e7bfe5-8a46-4f54-b6a4-ff8a79b3d15d
+				sourceLineageTag: seller_id
+				summarizeBy: none
+				sourceColumn: seller_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column seller_zip_code_prefix
+				dataType: int64
+				formatString: 0
+				lineageTag: f1feb6ce-6a27-4578-ac00-455b321989fa
+				sourceLineageTag: seller_zip_code_prefix
+				summarizeBy: sum
+				sourceColumn: seller_zip_code_prefix
+
+				annotation SummarizationSetBy = Automatic
+
+			column seller_city
+				dataType: string
+				lineageTag: 424d58b6-f85f-4f06-a93c-24100a43a339
+				sourceLineageTag: seller_city
+				summarizeBy: none
+				sourceColumn: seller_city
+
+				annotation SummarizationSetBy = Automatic
+
+			column seller_state
+				dataType: string
+				lineageTag: 5675ceee-769c-43e6-b418-33c863ec8b90
+				sourceLineageTag: seller_state
+				summarizeBy: none
+				sourceColumn: seller_state
+
+				annotation SummarizationSetBy = Automatic
+
+			column seller_region
+				dataType: string
+				lineageTag: 46c21d2a-10ed-4717-98ac-0c29694adb79
+				sourceLineageTag: seller_region
+				summarizeBy: none
+				sourceColumn: seller_region
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_seller = entity
+				mode: directLake
+				source
+					entityName: dim_seller
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table fact_order_reviews
+			lineageTag: 4607962b-07ac-4ecd-b0d4-eb96a9a5ca7c
+			sourceLineageTag: [gold].[fact_order_reviews]
+
+			measure average_review_score = AVERAGE(fact_order_reviews[review_score])
+				lineageTag: cd4bd24c-505f-480b-b8bb-c4b1d1f0617a
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			measure total_reviews = COUNTROWS(fact_order_reviews)
+				formatString: 0
+				lineageTag: f3609cd2-b439-40ed-aaf3-b844812652cc
+
+				changedProperty = Name
+
+			column review_id
+				dataType: string
+				isHidden
+				lineageTag: b35aacea-e716-4be7-93f9-5b62bbb1cc13
+				sourceLineageTag: review_id
+				summarizeBy: none
+				sourceColumn: review_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_id
+				dataType: string
+				isHidden
+				lineageTag: 5993ca16-b9d6-4c10-b9e0-bd0ae39f56e5
+				sourceLineageTag: order_id
+				summarizeBy: none
+				sourceColumn: order_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_creation_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: 83bfa8cf-0851-4815-a9e3-9d45dfaeb0a5
+				sourceLineageTag: review_creation_date_key
+				summarizeBy: sum
+				sourceColumn: review_creation_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_answer_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: eaa31448-e8f5-4fe8-a618-66d04ace86bc
+				sourceLineageTag: review_answer_date_key
+				summarizeBy: sum
+				sourceColumn: review_answer_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_creation_date
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: b46e299a-e20d-4b22-9688-76cbfc698b4e
+				sourceLineageTag: review_creation_date
+				summarizeBy: none
+				sourceColumn: review_creation_date
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_answer_timestamp
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: dcd3c15f-ccf9-46f4-8cd4-7a8100aa13a3
+				sourceLineageTag: review_answer_timestamp
+				summarizeBy: none
+				sourceColumn: review_answer_timestamp
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_score
+				dataType: int64
+				formatString: 0
+				lineageTag: 4d7b8c60-409b-4d31-bfe1-b1c8cac9a0ff
+				sourceLineageTag: review_score
+				summarizeBy: sum
+				sourceColumn: review_score
+
+				annotation SummarizationSetBy = Automatic
+
+			column satisfaction_category
+				dataType: string
+				lineageTag: 0854915b-958d-4a6b-8878-7c1dbf664e9d
+				sourceLineageTag: satisfaction_category
+				summarizeBy: none
+				sourceColumn: satisfaction_category
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_comment_title
+				dataType: string
+				lineageTag: 4cf2ea2a-70c4-4bb4-b03c-a7fdfbaef214
+				sourceLineageTag: review_comment_title
+				summarizeBy: none
+				sourceColumn: review_comment_title
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_comment_message
+				dataType: string
+				lineageTag: 30e06869-3757-471d-966e-aca121d57257
+				sourceLineageTag: review_comment_message
+				summarizeBy: none
+				sourceColumn: review_comment_message
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_comment_title
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: a45fe0a6-9eed-40d5-a0be-570f96b5f8fa
+				sourceLineageTag: has_comment_title
+				summarizeBy: none
+				sourceColumn: has_comment_title
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_comment_message
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: ff22baac-fffa-4abe-b204-28bf257e9891
+				sourceLineageTag: has_comment_message
+				summarizeBy: none
+				sourceColumn: has_comment_message
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_written_feedback
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: dca22a8a-5287-4947-b1ab-f99768934f5d
+				sourceLineageTag: has_written_feedback
+				summarizeBy: none
+				sourceColumn: has_written_feedback
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_response_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 84b0a5ff-9319-46b7-9780-a849f14eef08
+				sourceLineageTag: review_response_days
+				summarizeBy: sum
+				sourceColumn: review_response_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_response_over_30_days
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 62d66e97-9538-466f-935b-28235edcf677
+				sourceLineageTag: is_response_over_30_days
+				summarizeBy: none
+				sourceColumn: is_response_over_30_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column review_count
+				dataType: int64
+				formatString: 0
+				lineageTag: ebd2859f-ce91-455e-9df8-e8d9aa2cc5af
+				sourceLineageTag: review_count
+				summarizeBy: sum
+				sourceColumn: review_count
+
+				annotation SummarizationSetBy = Automatic
+
+			partition fact_order_reviews = entity
+				mode: directLake
+				source
+					entityName: fact_order_reviews
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table fact_order_items
+			lineageTag: ae7bb9ce-c6f7-43da-9b48-70e39025347a
+			sourceLineageTag: [gold].[fact_order_items]
+
+			measure product_revenue = SUM(fact_order_items[item_price])
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: 0596c578-db59-4c53-842f-e0c64e9b2371
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			measure total_freight_value = SUM((fact_order_items[freight_value]))
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: a4f1da70-38a5-4aac-830c-21c1edfb8d2b
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			measure gross_merchandise_value = [product_revenue] + [total_freight_value]
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: a9b53de1-75d7-4c0f-b5bf-def0671ae4e0
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			measure total_items = COUNTROWS(fact_order_items)
+				formatString: 0
+				lineageTag: c50e8016-ce1e-401c-bd5f-34581dece4fb
+
+				changedProperty = Name
+
+			measure Orders_with_items = DISTINCTCOUNT('fact_order_items'[order_id])
+				formatString: 0
+				lineageTag: 1ae017ba-ebf4-46ee-adb4-f3a50a0da84f
+
+				changedProperty = Name
+
+			measure Item_sold = SUM('fact_order_items'[item_count])
+				formatString: 0
+				lineageTag: 25529b92-eaf9-4bef-af0b-412aa9392307
+
+				changedProperty = Name
+
+			measure 'Average Item Price' = DIVIDE([product_revenue], [Item_sold])
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: ee585023-941d-4da5-bb3b-bc05cc53228c
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			measure Freight_percentage = DIVIDE([total_freight_value], [gross_merchandise_value])
+				formatString: 0.00%;-0.00%;0.00%
+				lineageTag: fb24f67d-0b1d-4820-bce7-2677bcd53a80
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+			column order_id
+				dataType: string
+				isHidden
+				lineageTag: 7778adda-af3c-46cd-b9fb-e734f61fa515
+				sourceLineageTag: order_id
+				summarizeBy: none
+				sourceColumn: order_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_item_id
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 2524c4e0-1978-48e9-86be-6b205d00e7e1
+				sourceLineageTag: order_item_id
+				summarizeBy: sum
+				sourceColumn: order_item_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_id
+				dataType: string
+				isHidden
+				lineageTag: e45acd09-69c8-4a04-a0b5-1814d010761b
+				sourceLineageTag: product_id
+				summarizeBy: none
+				sourceColumn: product_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column seller_id
+				dataType: string
+				isHidden
+				lineageTag: 8850ab1e-3aa1-4164-91b7-2f66065d1832
+				sourceLineageTag: seller_id
+				summarizeBy: none
+				sourceColumn: seller_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column shipping_limit_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: 15b07b36-ae75-457a-9d76-e49d3968f721
+				sourceLineageTag: shipping_limit_date_key
+				summarizeBy: sum
+				sourceColumn: shipping_limit_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column shipping_limit_timestamp
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 49b5d578-675f-40c6-9bc5-eecdb216f7c6
+				sourceLineageTag: shipping_limit_timestamp
+				summarizeBy: none
+				sourceColumn: shipping_limit_timestamp
+
+				annotation SummarizationSetBy = Automatic
+
+			column item_price
+				dataType: decimal
+				formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+				lineageTag: 121a76fe-bf81-4d9e-8d80-a6cde36fd37a
+				sourceLineageTag: item_price
+				summarizeBy: sum
+				sourceColumn: item_price
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+			column freight_value
+				dataType: decimal
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: a40c4bfe-9809-4868-9a7a-4714ddc63ac7
+				sourceLineageTag: freight_value
+				summarizeBy: sum
+				sourceColumn: freight_value
+
+				changedProperty = FormatString
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			column item_total_value
+				dataType: decimal
+				formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+				lineageTag: 193cb663-0841-4b1f-8642-008de85ae3e0
+				sourceLineageTag: item_total_value
+				summarizeBy: sum
+				sourceColumn: item_total_value
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+			column is_shipping_limit_date_out_of_range
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 5e8b5958-0083-4beb-bd67-b40e969d7b80
+				sourceLineageTag: is_shipping_limit_date_out_of_range
+				summarizeBy: none
+				sourceColumn: is_shipping_limit_date_out_of_range
+
+				annotation SummarizationSetBy = Automatic
+
+			column item_count
+				dataType: int64
+				formatString: 0
+				lineageTag: 48122395-84f5-4a3f-a0da-7331db513009
+				sourceLineageTag: item_count
+				summarizeBy: sum
+				sourceColumn: item_count
+
+				annotation SummarizationSetBy = Automatic
+
+			partition fact_order_items = entity
+				mode: directLake
+				source
+					entityName: fact_order_items
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table fact_orders
+			lineageTag: 66a1cea8-e8d2-44fc-9e6f-a97f161a984d
+			sourceLineageTag: [gold].[fact_orders]
+
+			measure total_orders = DISTINCTCOUNT(fact_orders[order_id])
+				formatString: 0
+				lineageTag: 0f5e4ab2-83e1-4e04-940e-c72a42575e55
+
+				changedProperty = Name
+
+			measure delivered_orders = CALCULATE([total_orders], fact_orders[order_status] = "delivered")
+				formatString: 0
+				lineageTag: c3a198b6-00e5-4c2b-af9b-e353f52dd8df
+
+				changedProperty = Name
+
+			measure delivery_rate = DIVIDE([delivered_orders], [total_orders], 0)
+				formatString: #,0.00%;-#,0.00%;#,0.00%
+				lineageTag: 705b69f5-89d7-4bae-af60-24d0db2b855a
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+			measure canceled_orders = CALCULATE([total_orders], fact_orders[order_status] = "canceled")
+				formatString: 0
+				lineageTag: 7a15b215-a949-4a0d-9a71-79b6a8438328
+
+				changedProperty = Name
+
+			measure orders_approval_date = CALCULATE([total_orders], USERELATIONSHIP(fact_orders[approved_date_key], dim_date[date_key]))
+				formatString: 0
+				lineageTag: 26402c61-d52f-40cf-a0e6-8efd9994c53d
+
+				changedProperty = Name
+
+			measure orders_carrier_date = CALCULATE([total_orders], USERELATIONSHIP(fact_orders[carrier_date_key], dim_date[date_key]))
+				formatString: 0
+				lineageTag: 7923513e-5dc3-4352-9b0a-bdea3c1f475e
+
+				changedProperty = Name
+
+			measure orders_delivery_date = CALCULATE([total_orders], USERELATIONSHIP(fact_orders[delivered_date_key], dim_date[date_key]))
+				formatString: 0
+				lineageTag: a62325ae-9516-4efd-848c-7854195168b4
+
+				changedProperty = Name
+
+			measure orders_estimated_delivery_date = CALCULATE([total_orders], USERELATIONSHIP(fact_orders[estimated_delivery_date_key], dim_date[date_key]))
+				formatString: 0
+				lineageTag: 79cdbc03-b151-4efc-98f7-6e8bad12e090
+
+				changedProperty = Name
+
+			measure Late_orders =
+					
+					CALCULATE(
+					    [total_orders],
+					    'fact_orders'[is_late_delivery] = TRUE()
+					)
+				formatString: 0
+				lineageTag: b82c44ca-1f11-47e8-856f-d1f7f827cac8
+
+				changedProperty = Name
+
+			measure Late_delivery_rate = DIVIDE([Late_orders], [delivered_orders])
+				formatString: 0.00%;-0.00%;0.00%
+				lineageTag: 4e8fd02b-aee8-48ce-af44-d3a33cd70ced
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+			measure Average_delivery_variance = AVERAGE('fact_orders'[delivery_variance_days])
+				lineageTag: 37e7baf6-2e67-4ec4-aa26-ecbdfadf4493
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			measure Negative_reviews = CALCULATE([total_reviews], 'fact_order_reviews'[review_score] <= 2)
+				formatString: 0
+				lineageTag: 65227c05-884b-4db7-b3c7-54ec3c7872ec
+
+				changedProperty = Name
+
+			column order_id
+				dataType: string
+				lineageTag: e614e609-05e1-46d7-8c1d-e1d617e48fa9
+				sourceLineageTag: order_id
+				summarizeBy: none
+				sourceColumn: order_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column customer_id
+				dataType: string
+				isHidden
+				lineageTag: 0158a3de-f83b-4ee7-959b-4193651899d8
+				sourceLineageTag: customer_id
+				summarizeBy: none
+				sourceColumn: customer_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_status
+				dataType: string
+				lineageTag: 4e78ca3b-5bb0-43a7-a72f-5bf9ee32592a
+				sourceLineageTag: order_status
+				summarizeBy: none
+				sourceColumn: order_status
+
+				annotation SummarizationSetBy = Automatic
+
+			column purchase_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: e6057819-1aad-46af-8487-d3e41ad27db1
+				sourceLineageTag: purchase_date_key
+				summarizeBy: none
+				sourceColumn: purchase_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column approved_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: 4216b974-bd56-4b62-a77b-b17d2c1da9aa
+				sourceLineageTag: approved_date_key
+				summarizeBy: sum
+				sourceColumn: approved_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column carrier_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: 796c4265-5b7a-425f-842e-2f87b5ec32aa
+				sourceLineageTag: carrier_date_key
+				summarizeBy: sum
+				sourceColumn: carrier_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column delivered_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: 04ca7a22-ac25-430a-8857-a665f2c275c5
+				sourceLineageTag: delivered_date_key
+				summarizeBy: sum
+				sourceColumn: delivered_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column estimated_delivery_date_key
+				dataType: int64
+				formatString: 0
+				lineageTag: 0cf9cc03-1219-4969-b5df-885af351c182
+				sourceLineageTag: estimated_delivery_date_key
+				summarizeBy: sum
+				sourceColumn: estimated_delivery_date_key
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_purchase_timestamp
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 001e7f18-018e-4102-aefb-9ceb2992b509
+				sourceLineageTag: order_purchase_timestamp
+				summarizeBy: none
+				sourceColumn: order_purchase_timestamp
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_approved_at
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 12eb7c37-95bb-44bc-ac6e-9a02e6b2a188
+				sourceLineageTag: order_approved_at
+				summarizeBy: none
+				sourceColumn: order_approved_at
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_delivered_carrier_date
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 3dc0a43b-ff26-4d02-80aa-26ae4915fa6f
+				sourceLineageTag: order_delivered_carrier_date
+				summarizeBy: none
+				sourceColumn: order_delivered_carrier_date
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_delivered_customer_date
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 6bdef31b-0c39-43e1-bdda-bb8fa10ca627
+				sourceLineageTag: order_delivered_customer_date
+				summarizeBy: none
+				sourceColumn: order_delivered_customer_date
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_estimated_delivery_date
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 67c88358-1b44-4fc9-866d-bca762709874
+				sourceLineageTag: order_estimated_delivery_date
+				summarizeBy: none
+				sourceColumn: order_estimated_delivery_date
+
+				annotation SummarizationSetBy = Automatic
+
+			column approval_time_hours
+				dataType: double
+				lineageTag: 27cfc0a2-12bb-4a11-9a2b-94b3634c426d
+				sourceLineageTag: approval_time_hours
+				summarizeBy: sum
+				sourceColumn: approval_time_hours
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column purchase_to_carrier_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 0fc52f12-64ef-4f0e-94b0-8cb312a332d6
+				sourceLineageTag: purchase_to_carrier_days
+				summarizeBy: sum
+				sourceColumn: purchase_to_carrier_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column shipping_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 8fc22169-f969-460a-86ca-06f70facb7f2
+				sourceLineageTag: shipping_days
+				summarizeBy: sum
+				sourceColumn: shipping_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column delivery_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 422ef0c7-aa06-42f3-ad8a-75d58ba359b7
+				sourceLineageTag: delivery_days
+				summarizeBy: sum
+				sourceColumn: delivery_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column estimated_delivery_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 3c4df0f5-f593-4e8e-b904-38d70cef8763
+				sourceLineageTag: estimated_delivery_days
+				summarizeBy: sum
+				sourceColumn: estimated_delivery_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column delivery_variance_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 75d9a8c1-10e4-4373-8d2e-1b71be2573a3
+				sourceLineageTag: delivery_variance_days
+				summarizeBy: sum
+				sourceColumn: delivery_variance_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column delivery_delay_days
+				dataType: int64
+				formatString: 0
+				lineageTag: 27fc42fc-7895-4345-be63-342c99214640
+				sourceLineageTag: delivery_delay_days
+				summarizeBy: sum
+				sourceColumn: delivery_delay_days
+
+				annotation SummarizationSetBy = Automatic
+
+			column delivery_performance_status
+				dataType: string
+				lineageTag: 31db2c69-50f1-418f-8a6b-c5873838ef35
+				sourceLineageTag: delivery_performance_status
+				summarizeBy: none
+				sourceColumn: delivery_performance_status
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_delivered_status
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: d23e06b5-53a7-459d-8f5f-ba9defd93cd4
+				sourceLineageTag: is_delivered_status
+				summarizeBy: none
+				sourceColumn: is_delivered_status
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_canceled
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: ebcfeadd-a832-4f6b-8394-8aba4c222e2c
+				sourceLineageTag: is_canceled
+				summarizeBy: none
+				sourceColumn: is_canceled
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_delivery_timestamp
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 88a56b8b-3037-4c5b-8963-aba24b0c444c
+				sourceLineageTag: has_delivery_timestamp
+				summarizeBy: none
+				sourceColumn: has_delivery_timestamp
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_late_delivery
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 37fb372c-7f6e-4f0a-96fd-6f0ca9cca929
+				sourceLineageTag: is_late_delivery
+				summarizeBy: none
+				sourceColumn: is_late_delivery
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_timeline_anomaly
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 572cecf4-57c5-49de-adc8-7a6bd5775c54
+				sourceLineageTag: has_timeline_anomaly
+				summarizeBy: none
+				sourceColumn: has_timeline_anomaly
+
+				annotation SummarizationSetBy = Automatic
+
+			column order_count
+				dataType: int64
+				formatString: 0
+				lineageTag: 7a6298eb-e81e-4040-9b04-f496121a0b94
+				sourceLineageTag: order_count
+				summarizeBy: sum
+				sourceColumn: order_count
+
+				annotation SummarizationSetBy = Automatic
+
+			partition fact_orders = entity
+				mode: directLake
+				source
+					entityName: fact_orders
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table dim_customer
+			lineageTag: f00f4def-3c0c-46cd-926b-5e11cc748fe7
+			sourceLineageTag: [gold].[dim_customer]
+
+			measure revenue_previous_month = CALCULATE([product_revenue], DATEADD('dim_date'[date], -1, MONTH))
+				formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+				lineageTag: 9d6683c7-924d-4ce9-9ca4-bfcbe1e99024
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+			measure 'Revenue MoM %' = DIVIDE([product_revenue]-[revenue_previous_month], [revenue_previous_month])
+				lineageTag: f8aaf970-3176-4687-b523-26d2a8d63db9
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			measure orders_per_customer = DIVIDE([total_orders], [Total Customers])
+				lineageTag: b84979de-6cd3-44c9-8b65-67c6d87b3da7
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			measure repeat_customers = COUNTROWS(FILTER(VALUES('dim_customer'[customer_unique_id]), CALCULATE([total_orders])>1))
+				formatString: 0
+				lineageTag: f50a0d79-31a0-45b7-96c3-44e740a5f188
+
+				changedProperty = Name
+
+			measure Repeat_customer_rate = DIVIDE([repeat_customers], [Total Customers], 9)
+				formatString: 0.00%;-0.00%;0.00%
+				lineageTag: c5034c0e-00d2-406f-b527-f815c09bec95
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+			measure total_sellers = DISTINCTCOUNT('fact_order_items'[seller_id])
+				formatString: 0
+				lineageTag: e7c2a8a2-6f37-4ab0-bb99-61db7e7246a2
+
+				changedProperty = Name
+
+			measure revenue_per_seller = DIVIDE([product_revenue], [total_sellers])
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: 8fe4c1ae-60c9-4e31-97e5-cb1cb157319e
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			column customer_id
+				dataType: string
+				isHidden
+				lineageTag: 01a174ce-2469-4127-b422-b2b75a59995f
+				sourceLineageTag: customer_id
+				summarizeBy: none
+				sourceColumn: customer_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column customer_unique_id
+				dataType: string
+				lineageTag: 428cca4a-8cb4-47dd-8720-a8f13aa68795
+				sourceLineageTag: customer_unique_id
+				summarizeBy: none
+				sourceColumn: customer_unique_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column customer_zip_code_prefix
+				dataType: int64
+				formatString: 0
+				lineageTag: 3676c595-6f59-463e-b236-7dbbf407ac5e
+				sourceLineageTag: customer_zip_code_prefix
+				summarizeBy: none
+				sourceColumn: customer_zip_code_prefix
+
+				annotation SummarizationSetBy = Automatic
+
+			column customer_city
+				dataType: string
+				lineageTag: 67a6cd2f-deeb-4ed6-bdfa-ee0b78a681b0
+				sourceLineageTag: customer_city
+				summarizeBy: none
+				sourceColumn: customer_city
+
+				annotation SummarizationSetBy = Automatic
+
+			column customer_state
+				dataType: string
+				lineageTag: 85cbd371-49fc-4338-b5fe-77476a4de046
+				sourceLineageTag: customer_state
+				summarizeBy: none
+				sourceColumn: customer_state
+
+				annotation SummarizationSetBy = Automatic
+
+			column customer_region
+				dataType: string
+				lineageTag: 0bb45de7-21a6-4f39-8d32-28476903a431
+				sourceLineageTag: customer_region
+				summarizeBy: none
+				sourceColumn: customer_region
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_customer = entity
+				mode: directLake
+				source
+					entityName: dim_customer
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table dim_product
+			lineageTag: 67414bae-cbd2-4276-b379-b98f8d10d011
+			sourceLineageTag: [gold].[dim_product]
+
+			column product_id
+				dataType: string
+				isHidden
+				lineageTag: f3974ba7-61b5-4bdc-8589-8b63326103c6
+				sourceLineageTag: product_id
+				summarizeBy: none
+				sourceColumn: product_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_category_portuguese
+				dataType: string
+				lineageTag: 66f86abe-2ea2-4cbb-af51-d5189d6c23a8
+				sourceLineageTag: product_category_portuguese
+				summarizeBy: none
+				sourceColumn: product_category_portuguese
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_category_english
+				dataType: string
+				lineageTag: 3a6e00a8-32c6-4b65-abbe-5b055d12b06f
+				sourceLineageTag: product_category_english
+				summarizeBy: none
+				sourceColumn: product_category_english
+
+				annotation SummarizationSetBy = Automatic
+
+			column category_translation_status
+				dataType: string
+				lineageTag: 09f2f345-91bf-4b9a-ac63-3ee5cfb68e52
+				sourceLineageTag: category_translation_status
+				summarizeBy: none
+				sourceColumn: category_translation_status
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_name_length
+				dataType: int64
+				formatString: 0
+				lineageTag: 2164e88f-10c3-4668-864e-2f8877c72d47
+				sourceLineageTag: product_name_length
+				summarizeBy: none
+				sourceColumn: product_name_length
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_description_length
+				dataType: int64
+				formatString: 0
+				lineageTag: 7507d7e5-a960-4b8b-87e4-30c613301990
+				sourceLineageTag: product_description_length
+				summarizeBy: none
+				sourceColumn: product_description_length
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_photos_qty
+				dataType: int64
+				formatString: 0
+				lineageTag: 74e9a1b5-11a3-4401-ad55-f9357828eeeb
+				sourceLineageTag: product_photos_qty
+				summarizeBy: none
+				sourceColumn: product_photos_qty
+
+				annotation SummarizationSetBy = Automatic
+
+			column product_weight_g
+				dataType: double
+				lineageTag: e35ea707-38cd-4baf-a5ac-720ceceb0d8b
+				sourceLineageTag: product_weight_g
+				summarizeBy: none
+				sourceColumn: product_weight_g
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column product_weight_kg
+				dataType: double
+				lineageTag: bb848008-30c8-4468-bed7-f19cc2da129c
+				sourceLineageTag: product_weight_kg
+				summarizeBy: none
+				sourceColumn: product_weight_kg
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column product_length_cm
+				dataType: double
+				lineageTag: db36be26-e6d1-473c-9773-2ac91bd0f397
+				sourceLineageTag: product_length_cm
+				summarizeBy: none
+				sourceColumn: product_length_cm
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column product_height_cm
+				dataType: double
+				lineageTag: ff597380-8c84-4fc7-a21e-cef8a6a5f7bd
+				sourceLineageTag: product_height_cm
+				summarizeBy: none
+				sourceColumn: product_height_cm
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column product_width_cm
+				dataType: double
+				lineageTag: cabd3510-6f01-45b6-beeb-9a49ab0200ba
+				sourceLineageTag: product_width_cm
+				summarizeBy: none
+				sourceColumn: product_width_cm
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column product_volume_cm3
+				dataType: int64
+				formatString: 0
+				lineageTag: 36bb0e76-e556-407a-8606-082d12419a13
+				sourceLineageTag: product_volume_cm3
+				summarizeBy: none
+				sourceColumn: product_volume_cm3
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_complete_measurements
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: e2012221-8cb3-4afa-b6fa-490a28b745ac
+				sourceLineageTag: has_complete_measurements
+				summarizeBy: none
+				sourceColumn: has_complete_measurements
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_product = entity
+				mode: directLake
+				source
+					entityName: dim_product
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table fact_order_payments
+			lineageTag: 8b58e103-277b-4e4c-9b7e-3b78985141b2
+			sourceLineageTag: [gold].[fact_order_payments]
+
+			measure total_payments = SUM(fact_order_payments[payment_value])
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: 5cccbdfd-6f6f-4c15-a2fe-75ad64c49a1f
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			measure average_orders_value = DIVIDE([product_revenue], [total_orders], 0)
+				formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+				lineageTag: 40bd8678-6ba8-4e1c-8a4c-057cd92d8912
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+				annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+			column order_id
+				dataType: string
+				isHidden
+				lineageTag: 13a65831-ac29-417e-923e-8ec7ec1c0dba
+				sourceLineageTag: order_id
+				summarizeBy: none
+				sourceColumn: order_id
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column payment_sequential
+				dataType: int64
+				formatString: 0
+				lineageTag: 1eeb3bff-57d1-402b-90ef-bb3115b06269
+				sourceLineageTag: payment_sequential
+				summarizeBy: sum
+				sourceColumn: payment_sequential
+
+				annotation SummarizationSetBy = Automatic
+
+			column payment_type
+				dataType: string
+				lineageTag: 53046a50-dc72-41a4-9c5e-57745e2387a7
+				sourceLineageTag: payment_type
+				summarizeBy: none
+				sourceColumn: payment_type
+
+				annotation SummarizationSetBy = Automatic
+
+			column payment_installments
+				dataType: int64
+				formatString: 0
+				lineageTag: 6850539a-bdfb-4955-b8a4-6e8f62eaa2c3
+				sourceLineageTag: payment_installments
+				summarizeBy: sum
+				sourceColumn: payment_installments
+
+				annotation SummarizationSetBy = Automatic
+
+			column payment_value
+				dataType: decimal
+				formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+				lineageTag: 65c7abba-032d-49d0-bbc2-8c1c99160c3e
+				sourceLineageTag: payment_value
+				summarizeBy: sum
+				sourceColumn: payment_value
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+			column is_installment_payment
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: b321012b-ef15-4fba-b4fd-3f03c7649f99
+				sourceLineageTag: is_installment_payment
+				summarizeBy: none
+				sourceColumn: is_installment_payment
+
+				annotation SummarizationSetBy = Automatic
+
+			column has_invalid_installment_count
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: b4bea9bb-e180-4771-aaac-354c995414a7
+				sourceLineageTag: has_invalid_installment_count
+				summarizeBy: none
+				sourceColumn: has_invalid_installment_count
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_undefined_payment_type
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 746eb946-f26d-4d06-9df0-8e35cc52b68f
+				sourceLineageTag: is_undefined_payment_type
+				summarizeBy: none
+				sourceColumn: is_undefined_payment_type
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_zero_value_payment
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: fe4ef31e-e9ef-4a68-847e-53a3c6fa4bc8
+				sourceLineageTag: is_zero_value_payment
+				summarizeBy: none
+				sourceColumn: is_zero_value_payment
+
+				annotation SummarizationSetBy = Automatic
+
+			column payment_count
+				dataType: int64
+				formatString: 0
+				lineageTag: 4b6de9d9-6ccb-4c73-9b71-62b429c3b085
+				sourceLineageTag: payment_count
+				summarizeBy: sum
+				sourceColumn: payment_count
+
+				annotation SummarizationSetBy = Automatic
+
+			partition fact_order_payments = entity
+				mode: directLake
+				source
+					entityName: fact_order_payments
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table dim_date
+			lineageTag: 2699fe43-edfc-485f-b294-e9e606f3ef41
+			sourceLineageTag: [gold].[dim_date]
+
+			column date_key
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 168d6681-ca17-42a0-8390-0ef7503c20d0
+				sourceLineageTag: date_key
+				summarizeBy: none
+				sourceColumn: date_key
+
+				changedProperty = IsHidden
+
+				annotation SummarizationSetBy = Automatic
+
+			column date
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 615f3f4d-42a1-4b8f-aceb-de47f882b647
+				sourceLineageTag: date
+				summarizeBy: none
+				sourceColumn: date
+
+				annotation SummarizationSetBy = Automatic
+
+			column year
+				dataType: int64
+				formatString: 0
+				lineageTag: 03e32497-2efa-4c01-9e78-1832eae3a2bf
+				sourceLineageTag: year
+				summarizeBy: none
+				sourceColumn: year
+
+				annotation SummarizationSetBy = Automatic
+
+			column quarter_number
+				dataType: int64
+				formatString: 0
+				lineageTag: ca7eae50-9c50-48ef-aac4-fcc60bfc0adc
+				sourceLineageTag: quarter_number
+				summarizeBy: none
+				sourceColumn: quarter_number
+
+				annotation SummarizationSetBy = Automatic
+
+			column quarter_name
+				dataType: string
+				lineageTag: eac48913-1767-4375-920d-84621ec075cc
+				sourceLineageTag: quarter_name
+				summarizeBy: none
+				sourceColumn: quarter_name
+
+				annotation SummarizationSetBy = Automatic
+
+			column year_quarter
+				dataType: string
+				lineageTag: 8f44ff90-02a3-4da0-a06f-f03ed7960558
+				sourceLineageTag: year_quarter
+				summarizeBy: none
+				sourceColumn: year_quarter
+
+				annotation SummarizationSetBy = Automatic
+
+			column month_number
+				dataType: int64
+				formatString: 0
+				lineageTag: 32802f88-749a-4141-8bb7-059d8b79a02f
+				sourceLineageTag: month_number
+				summarizeBy: none
+				sourceColumn: month_number
+
+				annotation SummarizationSetBy = Automatic
+
+			column month_name
+				dataType: string
+				lineageTag: 369d4ec8-388c-445c-b14a-51cf0d5dd6a0
+				sourceLineageTag: month_name
+				summarizeBy: none
+				sourceColumn: month_name
+				sortByColumn: month_number
+
+				changedProperty = SortByColumn
+
+				annotation SummarizationSetBy = Automatic
+
+			column year_month
+				dataType: string
+				lineageTag: bddc554f-36d4-4aaf-acb6-ba11edf72fc5
+				sourceLineageTag: year_month
+				summarizeBy: none
+				sourceColumn: year_month
+
+				annotation SummarizationSetBy = Automatic
+
+			column week_of_year
+				dataType: int64
+				formatString: 0
+				lineageTag: d01f12a8-5207-4428-9da7-e32638f63d2b
+				sourceLineageTag: week_of_year
+				summarizeBy: none
+				sourceColumn: week_of_year
+
+				annotation SummarizationSetBy = Automatic
+
+			column day_of_month
+				dataType: int64
+				formatString: 0
+				lineageTag: 3e723a7f-426a-498f-bdbb-963263b3dc3a
+				sourceLineageTag: day_of_month
+				summarizeBy: none
+				sourceColumn: day_of_month
+
+				annotation SummarizationSetBy = Automatic
+
+			column day_of_week_number
+				dataType: int64
+				formatString: 0
+				lineageTag: 18b791ef-cabb-4ca9-81e8-d79b17a0d7b1
+				sourceLineageTag: day_of_week_number
+				summarizeBy: none
+				sourceColumn: day_of_week_number
+
+				annotation SummarizationSetBy = Automatic
+
+			column day_name
+				dataType: string
+				lineageTag: c631dd6f-c443-4865-80bb-fddc79c9fb41
+				sourceLineageTag: day_name
+				summarizeBy: none
+				sourceColumn: day_name
+
+				annotation SummarizationSetBy = Automatic
+
+			column is_weekend
+				dataType: boolean
+				formatString: """TRUE"";""TRUE"";""FALSE"""
+				lineageTag: 7d1e3287-a29d-4be4-9896-4f2cab3a7d76
+				sourceLineageTag: is_weekend
+				summarizeBy: none
+				sourceColumn: is_weekend
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_date = entity
+				mode: directLake
+				source
+					entityName: dim_date
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table security_user_region
+			lineageTag: 043994b1-534a-4044-b72d-db2002a8f11a
+			sourceLineageTag: [gold].[security_user_region]
+
+			column user_email
+				dataType: string
+				lineageTag: 2e83f771-1a4f-455a-8aa1-292fb849b33b
+				sourceLineageTag: user_email
+				summarizeBy: none
+				sourceColumn: user_email
+
+				annotation SummarizationSetBy = Automatic
+
+			column seller_state
+				dataType: string
+				lineageTag: 5d8f0fba-d593-4471-9395-3e16f42f3d2e
+				sourceLineageTag: seller_state
+				summarizeBy: none
+				sourceColumn: seller_state
+
+				annotation SummarizationSetBy = Automatic
+
+			partition security_user_region = entity
+				mode: directLake
+				source
+					entityName: security_user_region
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table dim_seller_state
+			lineageTag: e4220b51-c1f1-4cf4-bc8e-33de348e0eba
+			sourceLineageTag: [gold].[dim_seller_state]
+
+			column seller_state
+				dataType: string
+				lineageTag: b4f9c545-4812-407f-9149-159e842b3a5d
+				sourceLineageTag: seller_state
+				summarizeBy: none
+				sourceColumn: seller_state
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dim_seller_state = entity
+				mode: directLake
+				source
+					entityName: dim_seller_state
+					schemaName: gold
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		table data_quality_results
+			lineageTag: b4cdfcf8-fdf0-4b3c-a85e-c31fde5f3d82
+			sourceLineageTag: [audit].[data_quality_results]
+
+			measure 'DQ Passed Checks Latest' =
+					
+					CALCULATE(
+					    [DQ Total Checks Latest],
+					    'data_quality_results'[status] = "PASS"
+					)
+				formatString: 0
+				lineageTag: 6e2700cd-4b6c-4101-b27d-32e19261a434
+
+				changedProperty = Name
+
+			measure 'DQ Failed Checks Latest' =
+					
+					CALCULATE(
+					    [DQ Total Checks Latest],
+					    'data_quality_results'[status] = "FAIL"
+					)
+				formatString: 0
+				lineageTag: 13540982-c0c5-41ee-ac3d-6838b17d2659
+
+				changedProperty = Name
+
+			measure 'DQ Failed Rows' =
+					VAR LatestRunID =
+					    MAXX(
+					        TOPN(
+					            1,
+					            ALL('data_quality_results'),
+					            'data_quality_results'[execution_timestamp], DESC
+					        ),
+					        'data_quality_results'[run_id]
+					    )
+					RETURN
+					    CALCULATE(
+					        SUM('data_quality_results'[failed_rows]),
+					        'data_quality_results'[run_id] = LatestRunID
+					    )
+				formatString: 0
+				lineageTag: 7fa230d5-215b-4569-8471-085998024bea
+
+				changedProperty = Name
+
+			measure 'DQ Latest Execution' =
+					
+					CALCULATE(
+					    MAX('data_quality_results'[execution_timestamp]),
+					    REMOVEFILTERS('data_quality_results')
+					)
+				formatString: General Date
+				lineageTag: 7f418c75-97f7-4607-abbf-3de9710c5b4f
+
+				changedProperty = Name
+
+			measure 'DQ Tables Checked Latest' =
+					
+					SUMX(
+					    VALUES('data_quality_results'[table_name]),
+					
+					    VAR LatestExecutionForTable =
+					        CALCULATE(
+					            MAX('data_quality_results'[execution_timestamp]),
+					            ALLEXCEPT(
+					                'data_quality_results',
+					                'data_quality_results'[table_name]
+					            )
+					        )
+					
+					    VAR ChecksInLatestExecution =
+					        CALCULATE(
+					            COUNTROWS('data_quality_results'),
+					            ALLEXCEPT(
+					                'data_quality_results',
+					                'data_quality_results'[table_name]
+					            ),
+					            'data_quality_results'[execution_timestamp]
+					                = LatestExecutionForTable
+					        )
+					
+					    RETURN
+					        IF(ChecksInLatestExecution > 0, 1, 0)
+					)
+				formatString: 0
+				lineageTag: 8153d5a7-b5e9-4b67-9941-15eecc4dfc5e
+
+				changedProperty = Name
+
+			measure 'DQ Latest Run Rows' = VAR LatestRunId = MAXX(TOPN(1, ALL('data_quality_results'), 'data_quality_results'[execution_timestamp], DESC), 'data_quality_results'[rule_id])  RETURN CALCULATE(COUNTROWS('data_quality_results'), 'data_quality_results'[run_id] = LatestRunId)
+				formatString: 0
+				lineageTag: d5748812-8ad5-4c29-b3f7-c6ddda8d210e
+
+				changedProperty = Name
+
+			measure product_revenue_previous_year =
+					
+					CALCULATE(
+					    [product_revenue],
+					    DATEADD(
+					        'dim_date'[date],
+					        -1,
+					        YEAR
+					    )
+					)
+				formatString: 0
+				lineageTag: 3d7b993a-3165-4b7d-bd3e-18bd4326c360
+
+				changedProperty = Name
+
+			measure product_revenue_yoy_pct =
+					DIVIDE(
+					    [product_revenue] - [product_revenue_previous_year],
+					    [product_revenue_previous_year]
+					)
+				formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+				lineageTag: 37de6c79-fd9f-4d1f-8d02-d909ce7c3d10
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+			measure product_revenue_trend =
+					VAR change_pct = [product_revenue_yoy_pct]
+					
+					RETURN
+					    SWITCH(
+					        TRUE(),
+					        ISBLANK(change_pct), "—",
+					        change_pct > 0, "▲ " & FORMAT(change_pct, "0.0%"),
+					        change_pct < 0, "▼ " & FORMAT(ABS(change_pct), "0.0%"),
+					        "● 0.0%"
+					    )
+				lineageTag: 26e54a0f-87bf-4ccc-95c7-bd3dc2acaa86
+
+				changedProperty = Name
+
+			measure 'Test Customer ID' =
+					
+					DISTINCTCOUNT(dim_customer[customer_id])
+				formatString: 0
+				lineageTag: a53f0192-619d-49ff-8ee5-38d409b6d919
+
+				changedProperty = Name
+
+			measure 'Total Customers' =
+					
+					DISTINCTCOUNT(dim_customer[customer_unique_id])
+				formatString: 0
+				lineageTag: 094c00ef-10e0-452c-bf81-9066977092f3
+
+				changedProperty = Name
+
+			measure 'Positive reviews' = CALCULATE([total_reviews], fact_order_reviews[review_score] >=4)
+				formatString: 0
+				lineageTag: 9cdd305b-2a9c-49f0-93bf-fb7e1008866b
+
+				changedProperty = Name
+
+			measure 'positive reviews rate' = DIVIDE([Positive reviews], [total_reviews], 0)
+				formatString: 0.00%;-0.00%;0.00%
+				lineageTag: 211720ef-7931-48a8-aea4-62b0f5982862
+
+				changedProperty = Name
+
+				changedProperty = FormatString
+
+			measure 'Negative reviews' = CALCULATE([total_reviews], fact_order_reviews[review_score] <=2)
+				formatString: 0
+				lineageTag: 64f20879-3f89-4df0-9579-0f41e3351905
+
+				changedProperty = Name
+
+			measure 'negative rate' = DIVIDE([Negative reviews], [total_reviews], 0)
+				lineageTag: 72fee2c8-e211-4f44-9e73-f278446b5c00
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			measure 'DQ Total Checks Latest' =
+					
+					SUMX(
+					    VALUES('data_quality_results'[table_name]),
+					
+					    VAR LatestExecutionForTable =
+					        CALCULATE(
+					            MAX('data_quality_results'[execution_timestamp]),
+					            ALLEXCEPT(
+					                'data_quality_results',
+					                'data_quality_results'[table_name]
+					            )
+					        )
+					
+					    RETURN
+					        CALCULATE(
+					            COUNTROWS('data_quality_results'),
+					            'data_quality_results'[execution_timestamp]
+					                = LatestExecutionForTable
+					        )
+					)
+				formatString: 0
+				lineageTag: 0f06da46-ecc3-4970-8627-117bddd7ff27
+
+				changedProperty = Name
+
+			measure 'DQ Warning Checks Latest' =
+					
+					CALCULATE(
+					    [DQ Total Checks Latest],
+					    'data_quality_results'[status] = "WARNING"
+					)
+				formatString: 0
+				lineageTag: 6097afe5-d55d-42f4-808b-35b8b715c447
+
+				changedProperty = Name
+
+			measure 'DQ Pass Rate Latest' =
+					
+					DIVIDE(
+					    [DQ Passed Checks Latest],
+					    CALCULATE(
+					        [DQ Total Checks Latest],
+					        REMOVEFILTERS('data_quality_results'[status])
+					    ),
+					    0
+					)
+				lineageTag: a88afbfa-8b3f-46f4-9dbb-bf16ec0d369e
+
+				changedProperty = Name
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column run_id
+				dataType: string
+				lineageTag: 3f3b1904-a5d7-4907-8015-27d5818b2075
+				sourceLineageTag: run_id
+				summarizeBy: none
+				sourceColumn: run_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column batch_id
+				dataType: string
+				lineageTag: 17a8c0fe-18d3-4d84-8136-ac52449b1acc
+				sourceLineageTag: batch_id
+				summarizeBy: none
+				sourceColumn: batch_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column table_name
+				dataType: string
+				lineageTag: de2ee04d-2a47-417b-899b-78e3f366fbec
+				sourceLineageTag: table_name
+				summarizeBy: none
+				sourceColumn: table_name
+
+				annotation SummarizationSetBy = Automatic
+
+			column rule_id
+				dataType: string
+				lineageTag: 5850643f-825d-4234-8e5e-188036f6046d
+				sourceLineageTag: rule_id
+				summarizeBy: none
+				sourceColumn: rule_id
+
+				annotation SummarizationSetBy = Automatic
+
+			column rule_name
+				dataType: string
+				lineageTag: 17d57905-d841-47db-ae2e-1ec968a5afe1
+				sourceLineageTag: rule_name
+				summarizeBy: none
+				sourceColumn: rule_name
+
+				annotation SummarizationSetBy = Automatic
+
+			column column_name
+				dataType: string
+				lineageTag: 90ae0600-4b04-4d1d-9a32-27a3c26da982
+				sourceLineageTag: column_name
+				summarizeBy: none
+				sourceColumn: column_name
+
+				annotation SummarizationSetBy = Automatic
+
+			column severity
+				dataType: string
+				lineageTag: 3443bea7-5eba-4c2f-9b05-515631f32c26
+				sourceLineageTag: severity
+				summarizeBy: none
+				sourceColumn: severity
+
+				annotation SummarizationSetBy = Automatic
+
+			column rows_checked
+				dataType: int64
+				formatString: 0
+				lineageTag: 96559a04-e030-48eb-b154-4fce42692017
+				sourceLineageTag: rows_checked
+				summarizeBy: sum
+				sourceColumn: rows_checked
+
+				annotation SummarizationSetBy = Automatic
+
+			column failed_rows
+				dataType: int64
+				formatString: 0
+				lineageTag: 144c3c0b-b225-4e9b-9cfb-e708727129c0
+				sourceLineageTag: failed_rows
+				summarizeBy: sum
+				sourceColumn: failed_rows
+
+				annotation SummarizationSetBy = Automatic
+
+			column failed_percentage
+				dataType: double
+				lineageTag: e906755a-e7ba-48e5-b8d4-a8e2677f1cbc
+				sourceLineageTag: failed_percentage
+				summarizeBy: sum
+				sourceColumn: failed_percentage
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column status
+				dataType: string
+				lineageTag: b412bb67-3a45-41e6-a859-190e5ae50b94
+				sourceLineageTag: status
+				summarizeBy: none
+				sourceColumn: status
+
+				annotation SummarizationSetBy = Automatic
+
+			column execution_timestamp
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: b3d950e4-b35e-4582-880d-da136de9148a
+				sourceLineageTag: execution_timestamp
+				summarizeBy: none
+				sourceColumn: execution_timestamp
+
+				annotation SummarizationSetBy = Automatic
+
+			partition data_quality_results = entity
+				mode: directLake
+				source
+					entityName: data_quality_results
+					schemaName: audit
+					expressionSource: 'DirectLake - LH_ECOMMERCE'
+
+		relationship 8d51744a-3e3f-6928-14da-b4053647c9d5
+			fromColumn: fact_orders.customer_id
+			toColumn: dim_customer.customer_id
+
+		relationship 50ac0708-4937-03a5-a56a-836a211eafb9
+			fromColumn: fact_order_items.seller_id
+			toColumn: dim_seller.seller_id
+
+		relationship 5c9ffa06-e11e-08b2-13a5-aa80722b74b2
+			isActive: false
+			fromColumn: fact_orders.delivered_date_key
+			toColumn: dim_date.date_key
+
+		relationship 18ba22b6-095c-acd5-d72b-ab78c2d49f5d
+			fromColumn: fact_orders.purchase_date_key
+			toColumn: dim_date.date_key
+
+		relationship c1006e26-8656-5819-5e99-34bf7e41ae62
+			fromColumn: fact_order_items.product_id
+			toColumn: dim_product.product_id
+
+		relationship 9890fc67-365a-9e6b-0d6f-ea55311dab74
+			fromColumn: fact_order_items.order_id
+			toColumn: fact_orders.order_id
+
+		relationship 0a4dc11c-70be-809b-1db2-be0b0a1afbb8
+			fromColumn: fact_order_payments.order_id
+			toColumn: fact_orders.order_id
+
+		relationship 6eb10764-5da5-2390-4d26-02dc89ec89f9
+			fromColumn: fact_order_reviews.order_id
+			toColumn: fact_orders.order_id
+
+		relationship 80e86c0b-b408-a546-bb4d-b5000c2b161b
+			isActive: false
+			fromColumn: fact_orders.approved_date_key
+			toColumn: dim_date.date_key
+
+		relationship 5de52fdc-2cc8-3849-a727-a5ef9d7651d5
+			isActive: false
+			fromColumn: fact_orders.carrier_date_key
+			toColumn: dim_date.date_key
+
+		relationship e385350e-7323-54c9-bb21-8fc5d5d535ac
+			isActive: false
+			fromColumn: fact_orders.estimated_delivery_date_key
+			toColumn: dim_date.date_key
+
+		relationship ce2c072e-b910-4f27-867c-30fb7bd2314b
+			fromColumn: dim_seller.seller_state
+			toColumn: dim_seller_state.seller_state
+
+		relationship 6faee23a-2b74-95fb-20da-599c47158d3d
+			crossFilteringBehavior: bothDirections
+			relyOnReferentialIntegrity
+			securityFilteringBehavior: bothDirections
+			fromColumn: security_user_region.seller_state
+			toColumn: dim_seller_state.seller_state
+
+		role Regional_Seller_Access
+			modelPermission: read
+
+			tablePermission security_user_region = [user_email] = USERPRINCIPALNAME()
+
+			member 'cristian.diaconescu00@e-uvt.ro'
+
+			annotation PBI_Id = 309a8c45ef4642328be625eee463550e
+
+		expression 'DirectLake - LH_ECOMMERCE' =
+				let
+				    Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/71ccbaaa-7069-4ee3-b27e-41d413a70f1e/cf721204-80fa-40e0-b436-3ee650c14ae5", [HierarchicalNavigation=true])
+				in
+				    Source
+			lineageTag: 97b25fbb-b140-48df-8a11-bec310652434
+
+			annotation PBI_IncludeFutureArtifacts = False
+
+			annotation PBI_RemovedChildren = [{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[product_category_translation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[audit].[gold_key_validation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[orders]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[order_reviews]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[product_category_translation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[products]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[order_items]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[order_payments]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[geolocation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[geolocation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[orders]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[audit].[silver_gold_row_validation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[products]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[audit].[gold_table_summary]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[audit].[gold_relationship_validation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[sellers]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[order_reviews]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[audit].[gold_date_relationship_validation]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[order_payments]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[Bronze].[customers]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[sellers]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[customers]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[audit].[rejected_records]"}},"objectType":"Table"},{"remoteItemId":{"analysisServicesObject":{"sourceName":null,"sourceLineageTag":"[silver].[order_items]"}},"objectType":"Table"}]
+
+		annotation __PBI_TimeIntelligenceEnabled = 1
+
+		annotation PBI_QueryOrder = ["DirectLake - LH_ECOMMERCE"]
+
+		annotation __LastRPTime = 134312467764491913
+
+		annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit","DaxQueryView_Desktop"]
+
