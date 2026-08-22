@@ -305,7 +305,6 @@ ecommerce-fabric-analytics/
     └── lessons-and-improvements.md
 ```
 
-I recommend keeping the full raw CSV files outside the public repository and adding either a small sample or a `data/README.md` that explains where the data comes from. This keeps the repository easier to clone and avoids redistributing a dataset without checking its terms.
 
 ## How to run the project
 
@@ -343,10 +342,3 @@ See [Lessons and improvements](docs/lessons-and-improvements.md).
 - [Lessons and improvements](docs/lessons-and-improvements.md)
 - [GitHub upload checklist](GITHUB_UPLOAD_CHECKLIST.md)
 
-## Notes before publishing
-
-- Remove or replace personal email addresses from security mapping code.
-- Rebind Fabric workspace, Lakehouse, notebook, connection and semantic-model identifiers after import.
-- The visual documentation is complete. A future `Test as role` screenshot would provide stronger proof of the RLS result, while the current screenshot documents the role definition.
-- Decide whether the Power BI file and full raw data should be stored directly, through large-file storage, or linked externally.
-- Choose a licence only after checking the dataset terms and deciding how others may reuse the project code.
