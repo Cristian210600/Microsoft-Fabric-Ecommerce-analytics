@@ -340,5 +340,5 @@ See [Lessons and improvements](docs/lessons-and-improvements.md).
 - [Setup and runbook](docs/setup-and-runbook.md)
 - [Power BI report documentation](docs/power-bi-report.md)
 - [Lessons and improvements](docs/lessons-and-improvements.md)
-- [GitHub upload checklist](GITHUB_UPLOAD_CHECKLIST.md)
+
 
