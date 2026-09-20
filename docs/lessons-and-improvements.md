@@ -165,5 +165,5 @@ My practical next version would focus on a small number of improvements rather t
 5. Add final report, Model view and pipeline screenshots.
 6. Test the complete project from a new Fabric workspace.
 
-That would make the repository easier for another person to reproduce and would show a clearer difference between the first learning version and a more production-oriented version.
+
 
